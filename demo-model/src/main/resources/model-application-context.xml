@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:component-scan base-package="com.example.demo"/>
+    <aop:config proxy-target-class="true"/>
+
+    <tx:annotation-driven/>
+
+    <bean name="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="url" value="${demo.jdbc.baseurl}"/>
+        <property name="username" value="${demo.jdbc.user}"/>
+        <property name="password" value="${demo.jdbc.passwd}"/>
+    </bean>
+
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="changeLog" value="classpath:db/changelog.xml"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="serverConfig" class="io.ebean.config.ServerConfig">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="name" value="ebeanServer"/>
+        <property name="ddlGenerate" value="false"/>
+        <property name="ddlRun" value="false"/>
+        <property name="externalTransactionManager">
+            <bean class="io.ebean.spring.txn.SpringJdbcTransactionManager"/>
+        </property>
+        <property name="defaultServer" value="true"/>
+        <property name="packages" value="hu.zerotohero.demo.model"/>
+    </bean>
+
+    <bean id="ebean" class="io.ebean.EbeanServerFactory">
+    </bean>
+
+</beans>
