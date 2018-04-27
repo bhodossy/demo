@@ -11,5 +11,12 @@
 
     <artifactId>demo-backend</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>demo-model</artifactId>
+            <version>0.1-ALPHA</version>
+        </dependency>
+    </dependencies>
 
 </project>
