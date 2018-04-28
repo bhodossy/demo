@@ -1,7 +1,7 @@
-package com.example.demo.base.dao;
-import com.example.demo.base.entity.BaseEntity;
-import io.ebean.Ebean;
-import io.ebean.annotation.Transactional;
+package com.example.demo.model.base.dao;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.annotation.Transactional;
+import com.example.demo.model.base.entity.BaseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.example.demo.base.entity;
+package com.example.demo.model.base.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
