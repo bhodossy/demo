@@ -19,11 +19,23 @@
             <version>1.4.197</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.avaje.ebean</groupId>
+            <artifactId>ebean</artifactId>
+            <version>9.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/io.ebean/ebean -->
         <dependency>
-            <groupId>io.ebean</groupId>
-            <artifactId>ebean</artifactId>
-            <version>11.15.4</version>
+            <groupId>org.avaje.ebeanorm</groupId>
+            <artifactId>avaje-ebeanorm-spring</artifactId>
+            <version>7.1.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
@@ -47,12 +59,59 @@
             <version>5.0.5.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.ebean/ebean-spring-txn -->
-        <dependency>
-            <groupId>io.ebean</groupId>
-            <artifactId>ebean-spring-txn</artifactId>
-            <version>11.10.4</version>
-        </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.avaje.ebeanorm</groupId>
+                <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+                <version>8.1.1</version>
+                <executions>
+                    <execution>
+                        <id>main</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <packages>
+                                com.example.demo.**
+                            </packages>
+                            <transformArgs>debug=9</transformArgs>
+                            <classSource>${project.build.outputDirectory}</classSource>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.15</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <includes>
+                        <include>OnlyIntegrationTestsAllowedInTheModel</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -9,16 +9,16 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-    <context:component-scan base-package="com.example.demo"/>
+    <context:component-scan base-package="com.example.demo.model"/>
     <aop:config proxy-target-class="true"/>
 
     <tx:annotation-driven/>
 
-    <bean name="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-        <property name="driverClass" value="org.h2.Driver"/>
-        <property name="url" value="${demo.jdbc.baseurl}"/>
-        <property name="username" value="${demo.jdbc.user}"/>
-        <property name="password" value="${demo.jdbc.passwd}"/>
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/demo/database/demo"/>
+        <property name="username" value="demo"/>
+        <property name="password" value="demo"/>
     </bean>
 
     <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
@@ -30,19 +30,21 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="serverConfig" class="io.ebean.config.ServerConfig">
+    <bean id="serverConfig" class="com.avaje.ebean.config.ServerConfig">
         <property name="dataSource" ref="dataSource"/>
         <property name="name" value="ebeanServer"/>
+        <property name="h2ProductionMode" value="true"/>
         <property name="ddlGenerate" value="false"/>
         <property name="ddlRun" value="false"/>
         <property name="externalTransactionManager">
-            <bean class="io.ebean.spring.txn.SpringJdbcTransactionManager"/>
+            <bean class="com.avaje.ebean.springsupport.txn.SpringAwareJdbcTransactionManager"/>
         </property>
         <property name="defaultServer" value="true"/>
-        <property name="packages" value="hu.zerotohero.demo.model"/>
+        <property name="packages" value="hu.zerotohero.dotda.model"/>
     </bean>
 
-    <bean id="ebean" class="io.ebean.EbeanServerFactory">
+    <bean id="ebean" class="com.avaje.ebean.springsupport.factory.EbeanServerFactoryBean">
+        <property name="serverConfig" ref="serverConfig"/>
     </bean>
 
 </beans>
