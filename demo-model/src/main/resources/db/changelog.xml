@@ -55,6 +55,19 @@
                                  referencedTableName="publication"/>
     </changeSet>
 
+    <changeSet id="2018.05.08_change_profile_table" author="denes.berta">
+        <addColumn tableName="profile">
+            <column name="last_name" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2018.05.08_change_publication_table" author="denes.berta">
+        <addColumn tableName="publication">
+            <column name="title" type="varchar(255)"/>
+            <column name="abstract" type="varchar(4095)"/>
+        </addColumn>
+    </changeSet>
+
     <include file="db/dummydatas.xml"/>
 
 </databaseChangeLog>

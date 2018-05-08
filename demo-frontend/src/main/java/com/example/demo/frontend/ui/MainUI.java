@@ -1,5 +1,6 @@
 package com.example.demo.frontend.ui;
 
+import com.example.demo.model.context.AppCtx;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
@@ -61,6 +62,7 @@ public class MainUI extends UI {
 
     private TextField title = new TextField("Title");
     private TextField doi = new TextField("DOI");
+    private TextField year = new TextField("Year");
     private TextField keys = new TextField("Keywords");
     private TextField abs = new TextField("Abstract");
     private Window subWindow = new Window("Add publication");
@@ -76,12 +78,13 @@ public class MainUI extends UI {
         cancel.addClickListener(e -> subWindow.close());
         options.addComponents(save, cancel);
 
-        subContent.addComponents(title, doi, keys, abs, options);
+        subContent.addComponents(title, doi, year, keys, abs, options);
         subWindow.setContent(subContent);
         addWindow(subWindow);
     }
 
     private void addPub() {
+        AppCtx.bean(PublicationControllerBean.class).register(doi.getValue(), title.getValue(), abs.getValue(), Integer.parseInt(year.getValue()));
         pubGrid.insertRow(1);
         pubGrid.addComponents(new Label(title.getValue()), new Label(doi.getValue()));
         subWindow.close();

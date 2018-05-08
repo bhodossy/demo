@@ -6,6 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/demo-backend/demo-backend.iml" filepath="$PROJECT_DIR$/demo-backend/demo-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo-frontend/demo-frontend.iml" filepath="$PROJECT_DIR$/demo-frontend/demo-frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo-model/demo-model.iml" filepath="$PROJECT_DIR$/demo-model/demo-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo-frontend/src/main/main.iml" filepath="$PROJECT_DIR$/demo-frontend/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo-backend/src/main/main1.iml" filepath="$PROJECT_DIR$/demo-backend/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo-model/src/main/main2.iml" filepath="$PROJECT_DIR$/demo-model/src/main/main2.iml" />
     </modules>
   </component>
 </project>
